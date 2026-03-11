@@ -1,0 +1,32 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private apiUrl = 'http://localhost:5287/api/auth';
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  login(username: string, password: string) {
+    return this.http.post<{ token: string; username: string; role: string }>(
+      `${this.apiUrl}/login`, { username, password }
+    ).pipe(tap(res => {
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('username', res.username);
+      localStorage.setItem('role', res.role);
+    }));
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
+
+  getToken() { return localStorage.getItem('token'); }
+  getRole() { return localStorage.getItem('role'); }
+  getUsername() { return localStorage.getItem('username'); }
+  isLoggedIn() { return !!this.getToken(); }
+  isAdmin() { return this.getRole() === 'Admin'; }
+}
