@@ -12,10 +12,8 @@ import { LowStockAlert, ExpiryAlert } from '../../models/alert.model';
       <h2 class="page-title">Alerts</h2>
       <div class="tabs">
         <button [class.active]="activeTab === 'low'" (click)="activeTab='low'">⚠️ Low Stock ({{ lowStock.length }})</button>
-        <button [class.active]="activeTab === 'expiry'" (click)="activeTab='expiry'">🕐 Expiring Soon / Expired ({{ expiry.length }})</button>
+        <button [class.active]="activeTab === 'expiry'" (click)="activeTab='expiry'">🕐 Expiring / Expired ({{ expiry.length }})</button>
       </div>
-
-      <!-- Low Stock Tab -->
       <div *ngIf="activeTab === 'low'" class="table-wrapper">
         <div *ngIf="lowStock.length === 0" class="empty">✅ No low stock alerts!</div>
         <table *ngIf="lowStock.length > 0">
@@ -24,15 +22,13 @@ import { LowStockAlert, ExpiryAlert } from '../../models/alert.model';
             <tr *ngFor="let a of lowStock" class="alert-row-orange">
               <td><strong>{{ a.drugName }}</strong></td>
               <td>{{ a.category || '—' }}</td>
-              <td><span class="stock-num low">{{ a.totalStock }}</span></td>
+              <td><span class="stock-num">{{ a.totalStock }}</span></td>
               <td>{{ a.threshold }}</td>
               <td class="shortage">-{{ a.threshold - a.totalStock }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-
-      <!-- Expiry Tab -->
       <div *ngIf="activeTab === 'expiry'" class="table-wrapper">
         <div *ngIf="expiry.length === 0" class="empty">✅ No expiry alerts!</div>
         <table *ngIf="expiry.length > 0">
@@ -44,7 +40,7 @@ import { LowStockAlert, ExpiryAlert } from '../../models/alert.model';
               <td>{{ a.quantity }}</td>
               <td>{{ a.expiryDate | date:'dd MMM yyyy' }}</td>
               <td>
-                <span class="badge expired" *ngIf="a.daysUntilExpiry < 0">Expired {{ -a.daysUntilExpiry }} days ago</span>
+                <span class="badge expired"  *ngIf="a.daysUntilExpiry < 0">Expired {{ -a.daysUntilExpiry }} days ago</span>
                 <span class="badge expiring" *ngIf="a.daysUntilExpiry >= 0">Expires in {{ a.daysUntilExpiry }} days</span>
               </td>
             </tr>
@@ -66,7 +62,7 @@ import { LowStockAlert, ExpiryAlert } from '../../models/alert.model';
     .alert-row-orange { background:#fff7ed; }
     .alert-row-red    { background:#fff5f5; }
     .alert-row-yellow { background:#fefce8; }
-    .stock-num.low { color:#dc2626; font-weight:700; font-size:16px; }
+    .stock-num { color:#dc2626; font-weight:700; font-size:16px; }
     .shortage { color:#dc2626; font-weight:700; }
     .badge { padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; }
     .badge.expired  { background:#fee2e2; color:#991b1b; }

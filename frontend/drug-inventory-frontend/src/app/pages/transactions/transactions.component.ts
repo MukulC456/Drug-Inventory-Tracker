@@ -12,7 +12,9 @@ import { Transaction } from '../../models/transaction.model';
       <h2 class="page-title">Stock Transaction Log</h2>
       <div class="table-wrapper">
         <table>
-          <thead><tr><th>Date</th><th>Drug</th><th>Batch</th><th>Type</th><th>Quantity</th><th>Reason</th><th>Performed By</th></tr></thead>
+          <thead>
+            <tr><th>Date</th><th>Drug</th><th>Batch</th><th>Type</th><th>Quantity</th><th>Reason</th><th>Performed By</th></tr>
+          </thead>
           <tbody>
             <tr *ngFor="let t of transactions">
               <td>{{ t.transactionDate | date:'dd MMM yyyy, HH:mm' }}</td>

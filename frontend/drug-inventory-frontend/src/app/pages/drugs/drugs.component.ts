@@ -15,15 +15,13 @@ import { Drug, CreateDrug } from '../../models/drug.model';
         <h2 class="page-title">Drug Master List</h2>
         <button *ngIf="auth.isAdmin()" class="btn-primary" (click)="openModal()">+ Add Drug</button>
       </div>
-
       <div class="search-bar">
         <input [(ngModel)]="search" placeholder="Search drugs..." (input)="filterDrugs()" />
       </div>
-
       <div class="table-wrapper">
         <table>
           <thead>
-            <tr><th>Name</th><th>Category</th><th>Unit</th><th>Low Stock Threshold</th><th>Total Stock</th><th>Status</th><th *ngIf="auth.isAdmin()">Actions</th></tr>
+            <tr><th>Name</th><th>Category</th><th>Unit</th><th>Threshold</th><th>Total Stock</th><th>Status</th><th *ngIf="auth.isAdmin()">Actions</th></tr>
           </thead>
           <tbody>
             <tr *ngFor="let drug of filtered">
@@ -41,8 +39,6 @@ import { Drug, CreateDrug } from '../../models/drug.model';
           </tbody>
         </table>
       </div>
-
-      <!-- Modal -->
       <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
         <div class="modal" (click)="$event.stopPropagation()">
           <h3>{{ editing ? 'Edit Drug' : 'Add Drug' }}</h3>
@@ -87,7 +83,7 @@ import { Drug, CreateDrug } from '../../models/drug.model';
 export class DrugsComponent implements OnInit {
   drugs: Drug[] = []; filtered: Drug[] = [];
   search = ''; showModal = false; editing: Drug | null = null;
-  form: CreateDrug = { name:'', lowStockThreshold:10 };
+  form: CreateDrug = { name: '', lowStockThreshold: 10 };
 
   constructor(public auth: AuthService, private drugService: DrugService) {}
   ngOnInit() { this.load(); }
@@ -95,7 +91,7 @@ export class DrugsComponent implements OnInit {
   filterDrugs() { this.filtered = this.drugs.filter(d => d.name.toLowerCase().includes(this.search.toLowerCase())); }
   openModal(drug?: Drug) {
     this.editing = drug || null;
-    this.form = drug ? { name:drug.name, category:drug.category, unit:drug.unit, description:drug.description, lowStockThreshold:drug.lowStockThreshold } : { name:'', lowStockThreshold:10 };
+    this.form = drug ? { name: drug.name, category: drug.category, unit: drug.unit, description: drug.description, lowStockThreshold: drug.lowStockThreshold } : { name: '', lowStockThreshold: 10 };
     this.showModal = true;
   }
   closeModal() { this.showModal = false; }

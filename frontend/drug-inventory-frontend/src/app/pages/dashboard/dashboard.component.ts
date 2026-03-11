@@ -44,7 +44,7 @@ import { DashboardSummary } from '../../models/alert.model';
           <div class="card-icon">❌</div>
           <div class="card-info">
             <div class="card-value">{{ summary.expiredCount }}</div>
-            <div class="card-label">Expired Batches</div>
+            <div class="card-label">Expired</div>
           </div>
         </div>
       </div>
@@ -71,7 +71,5 @@ import { DashboardSummary } from '../../models/alert.model';
 export class DashboardComponent implements OnInit {
   summary?: DashboardSummary;
   constructor(private alertService: AlertService) {}
-  ngOnInit() {
-    this.alertService.getDashboard().subscribe(s => this.summary = s);
-  }
+  ngOnInit() { this.alertService.getDashboard().subscribe(s => this.summary = s); }
 }

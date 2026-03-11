@@ -16,20 +16,18 @@ import { AuthService } from '../../services/auth.service';
           <h1>Drug Inventory</h1>
           <p>Tracker System</p>
         </div>
-        <form (ngSubmit)="onLogin()">
-          <div class="form-group">
-            <label>Username</label>
-            <input type="text" [(ngModel)]="username" name="username" placeholder="Enter username" required />
-          </div>
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" [(ngModel)]="password" name="password" placeholder="Enter password" required />
-          </div>
-          <div *ngIf="error" class="error-msg">{{ error }}</div>
-          <button type="submit" [disabled]="loading" class="btn-login">
-            {{ loading ? 'Signing in...' : 'Sign In' }}
-          </button>
-        </form>
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" [(ngModel)]="username" placeholder="Enter username" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="password" placeholder="Enter password" />
+        </div>
+        <div *ngIf="error" class="error-msg">{{ error }}</div>
+        <button (click)="onLogin()" [disabled]="loading" class="btn-login">
+          {{ loading ? 'Signing in...' : 'Sign In' }}
+        </button>
       </div>
     </div>
   `,

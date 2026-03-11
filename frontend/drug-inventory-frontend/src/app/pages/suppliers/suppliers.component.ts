@@ -66,10 +66,10 @@ import { Supplier } from '../../models/supplier.model';
 })
 export class SuppliersComponent implements OnInit {
   suppliers: Supplier[] = []; showModal = false; editing: Supplier | null = null;
-  form: any = { name:'' };
+  form: any = { name: '' };
   constructor(public auth: AuthService, private supplierService: SupplierService) {}
   ngOnInit() { this.supplierService.getAll().subscribe(s => this.suppliers = s); }
-  openModal(s?: Supplier) { this.editing = s || null; this.form = s ? {...s} : { name:'' }; this.showModal = true; }
+  openModal(s?: Supplier) { this.editing = s || null; this.form = s ? { ...s } : { name: '' }; this.showModal = true; }
   save() {
     const obs = this.editing ? this.supplierService.update(this.editing.supplierId, this.form) : this.supplierService.create(this.form);
     obs.subscribe(() => { this.supplierService.getAll().subscribe(s => this.suppliers = s); this.showModal = false; });

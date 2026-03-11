@@ -16,11 +16,8 @@ import { Supplier } from '../../models/supplier.model';
     <div class="page">
       <div class="page-header">
         <h2 class="page-title">Inventory</h2>
-        <div class="btn-group">
-          <button class="btn-primary" (click)="openAddModal()">+ Add Stock</button>
-        </div>
+        <button class="btn-primary" (click)="openAddModal()">+ Add Stock</button>
       </div>
-
       <div class="table-wrapper">
         <table>
           <thead>
@@ -35,12 +32,12 @@ import { Supplier } from '../../models/supplier.model';
               <td>{{ item.expiryDate | date:'dd MMM yyyy' }}</td>
               <td>{{ item.receivedDate | date:'dd MMM yyyy' }}</td>
               <td>
-                <span class="badge expired" *ngIf="item.isExpired">Expired</span>
+                <span class="badge expired"  *ngIf="item.isExpired">Expired</span>
                 <span class="badge expiring" *ngIf="item.isExpiringSoon && !item.isExpired">Expiring Soon</span>
-                <span class="badge ok" *ngIf="!item.isExpired && !item.isExpiringSoon">OK</span>
+                <span class="badge ok"       *ngIf="!item.isExpired && !item.isExpiringSoon">OK</span>
               </td>
               <td>
-                <button class="btn-sm danger" (click)="openRemoveModal(item)" [disabled]="item.quantity === 0">Remove Stock</button>
+                <button class="btn-sm danger" (click)="openRemoveModal(item)" [disabled]="item.quantity === 0">Remove</button>
               </td>
             </tr>
           </tbody>
@@ -52,12 +49,14 @@ import { Supplier } from '../../models/supplier.model';
         <div class="modal" (click)="$event.stopPropagation()">
           <h3>Add Stock</h3>
           <div class="form-group"><label>Drug *</label>
-            <select [(ngModel)]="addForm.drugId"><option value="0" disabled>Select Drug</option>
+            <select [(ngModel)]="addForm.drugId">
+              <option [value]="0" disabled>Select Drug</option>
               <option *ngFor="let d of drugs" [value]="d.drugId">{{ d.name }}</option>
             </select>
           </div>
           <div class="form-group"><label>Supplier</label>
-            <select [(ngModel)]="addForm.supplierId"><option [value]="undefined">None</option>
+            <select [(ngModel)]="addForm.supplierId">
+              <option [value]="undefined">None</option>
               <option *ngFor="let s of suppliers" [value]="s.supplierId">{{ s.name }}</option>
             </select>
           </div>
@@ -78,8 +77,8 @@ import { Supplier } from '../../models/supplier.model';
       <div class="modal-overlay" *ngIf="showRemoveModal" (click)="showRemoveModal=false">
         <div class="modal" (click)="$event.stopPropagation()">
           <h3>Remove Stock — {{ selectedItem?.drugName }}</h3>
-          <p style="color:#64748b;font-size:14px">Batch: {{ selectedItem?.batchNumber }} | Available: {{ selectedItem?.quantity }}</p>
-          <div class="form-group"><label>Quantity to Remove *</label><input type="number" [(ngModel)]="removeForm.quantity" [max]="selectedItem?.quantity" /></div>
+          <p style="color:#64748b;font-size:14px;margin-bottom:16px">Batch: {{ selectedItem?.batchNumber }} | Available: {{ selectedItem?.quantity }}</p>
+          <input type="number" [(ngModel)]="removeForm.quantity" [max]="selectedItem?.quantity ?? 9999" />
           <div class="form-group"><label>Reason</label><input [(ngModel)]="removeForm.reason" placeholder="Stock dispensed" /></div>
           <div class="modal-actions">
             <button class="btn-secondary" (click)="showRemoveModal=false">Cancel</button>
@@ -118,8 +117,8 @@ import { Supplier } from '../../models/supplier.model';
 export class InventoryComponent implements OnInit {
   inventory: Inventory[] = []; drugs: Drug[] = []; suppliers: Supplier[] = [];
   showAddModal = false; showRemoveModal = false; selectedItem: Inventory | null = null;
-  addForm: AddStock = { drugId:0, batchNumber:'', quantity:0, expiryDate:'', receivedDate: new Date().toISOString().split('T')[0] };
-  removeForm: RemoveStock = { inventoryId:0, quantity:0 };
+  addForm: AddStock = { drugId: 0, batchNumber: '', quantity: 0, expiryDate: '', receivedDate: new Date().toISOString().split('T')[0] };
+  removeForm: RemoveStock = { inventoryId: 0, quantity: 0 };
 
   constructor(private inventoryService: InventoryService, private drugService: DrugService, private supplierService: SupplierService) {}
   ngOnInit() {
@@ -127,8 +126,15 @@ export class InventoryComponent implements OnInit {
     this.drugService.getAll().subscribe(d => this.drugs = d);
     this.supplierService.getAll().subscribe(s => this.suppliers = s);
   }
-  openAddModal() { this.addForm = { drugId:0, batchNumber:'', quantity:0, expiryDate:'', receivedDate: new Date().toISOString().split('T')[0] }; this.showAddModal = true; }
-  openRemoveModal(item: Inventory) { this.selectedItem = item; this.removeForm = { inventoryId: item.inventoryId, quantity:0 }; this.showRemoveModal = true; }
+  openAddModal() {
+    this.addForm = { drugId: 0, batchNumber: '', quantity: 0, expiryDate: '', receivedDate: new Date().toISOString().split('T')[0] };
+    this.showAddModal = true;
+  }
+  openRemoveModal(item: Inventory) {
+    this.selectedItem = item;
+    this.removeForm = { inventoryId: item.inventoryId, quantity: 0 };
+    this.showRemoveModal = true;
+  }
   addStock() {
     this.inventoryService.addStock(this.addForm).subscribe(() => {
       this.inventoryService.getAll().subscribe(i => this.inventory = i);
