@@ -4,7 +4,7 @@ import { DashboardSummary, LowStockAlert, ExpiryAlert } from '../models/alert.mo
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
-  private url = 'http://localhost:5287/api/alerts';
+  private url = 'https://localhost:7000/api/alerts';
 
   constructor(private http: HttpClient) {}
 

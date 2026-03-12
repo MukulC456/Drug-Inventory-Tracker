@@ -4,7 +4,7 @@ import { Supplier } from '../models/supplier.model';
 
 @Injectable({ providedIn: 'root' })
 export class SupplierService {
-  private url = 'http://localhost:5287/api/suppliers';
+  private url = 'https://localhost:7000/api/suppliers';
 
   constructor(private http: HttpClient) {}
 

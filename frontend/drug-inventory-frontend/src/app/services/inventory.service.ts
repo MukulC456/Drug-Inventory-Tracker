@@ -5,7 +5,7 @@ import { Transaction } from '../models/transaction.model';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
-  private url = 'http://localhost:5287/api/inventory';
+  private url = 'https://localhost:7000/api/inventory';
 
   constructor(private http: HttpClient) {}
 
