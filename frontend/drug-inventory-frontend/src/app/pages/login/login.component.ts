@@ -18,11 +18,11 @@ import { AuthService } from '../../services/auth.service';
         </div>
         <div class="form-group">
           <label>Username</label>
-          <input type="text" [(ngModel)]="username" placeholder="Enter username" />
+          <input type="text" [(ngModel)]="username" placeholder="Enter username(e.g. admin@pharmacy.com)" />
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" [(ngModel)]="password" placeholder="Enter password" />
+          <input type="password" [(ngModel)]="password" placeholder="Enter password(e.g. Admin@123)" />
         </div>
         <div *ngIf="error" class="error-msg">{{ error }}</div>
         <button (click)="onLogin()" [disabled]="loading" class="btn-login">
