@@ -37,7 +37,7 @@ builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins("http://localhost:4200", "https://orange-wave-021cbcc00.1.azurestaticapps.net")
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
