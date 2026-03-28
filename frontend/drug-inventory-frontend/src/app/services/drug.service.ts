@@ -4,7 +4,7 @@ import { Drug, CreateDrug } from '../models/drug.model';
 
 @Injectable({ providedIn: 'root' })
 export class DrugService {
-  private url = 'https://drug-inventory-api-mukul-a5d0e9b9fhbjbpdd.southindia-01.azurewebsites.net/index.html';
+  private url = 'https://drug-inventory-api-mukul-a5d0e9b9fhbjbpdd.southindia-01.azurewebsites.net';
 
   constructor(private http: HttpClient) {}
 

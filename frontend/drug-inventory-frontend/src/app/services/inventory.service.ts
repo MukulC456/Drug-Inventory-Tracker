@@ -5,7 +5,7 @@ import { Transaction } from '../models/transaction.model';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
-  private url = 'https://https://drug-inventory-api-mukul-a5d0e9b9fhbjbpdd.southindia-01.azurewebsites.net/api/inventory';
+  private url = 'https://drug-inventory-api-mukul-a5d0e9b9fhbjbpdd.southindia-01.azurewebsites.net';
 
   constructor(private http: HttpClient) {}
 
