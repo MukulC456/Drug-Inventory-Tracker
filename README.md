@@ -3,6 +3,7 @@
 A full-stack **Drug Inventory Management System** built with **Angular** and **ASP.NET Core Web API**, designed for pharmacy workflows to manage drugs, inventory, suppliers, and automated stock alerts.
 
 Live Demo: https://orange-wave-021cbcc00.1.azurestaticapps.net
+
 API Docs: https://drug-inventory-api-mukul-a5d0e9b9fhbjbpdd.southindia-01.azurewebsites.net/index.html
 
 ## Tech Stack
