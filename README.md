@@ -7,7 +7,7 @@ Live Demo: https://orange-wave-021cbcc00.1.azurestaticapps.net
 API Docs: https://drug-inventory-api-mukul-a5d0e9b9fhbjbpdd.southindia-01.azurewebsites.net/index.html
 
 ## Tech Stack
-1. Frontend: Angular 17, TypeScript, SCSS, HTML
+1. Frontend: Angular 21, TypeScript, SCSS, HTML
 2. Backend: ASP.NET Core 10 Web API, Entity Framework Core
 3. Database: Azure SQL Database 
 4. Authentication: JWT Bearer Tokens 
