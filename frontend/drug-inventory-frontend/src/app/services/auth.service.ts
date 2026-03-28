@@ -11,7 +11,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http.post<{ token: string; username: string; role: string }>(
-      `${this.apiUrl}/login`, { username, password }
+      `${this.apiUrl}`, { username, password }
     ).pipe(tap(res => {
       localStorage.setItem('token', res.token);
       localStorage.setItem('username', res.username);
