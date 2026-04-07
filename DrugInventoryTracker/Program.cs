@@ -1,4 +1,5 @@
 using DrugInventoryTracker.Data;
+using DrugInventoryTracker.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -84,5 +85,89 @@ app.UseCors("AllowAngular");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    // Seed Drugs
+    if (!db.Drugs.Any())
+    {
+        db.Drugs.AddRange(
+            new Drug
+            {
+                Name = "Paracetamol 500mg",
+                Category = "Tablet",
+                Unit = "Strip",
+                Description = "Used for fever and pain relief",
+                LowStockThreshold = 50
+            },
+            new Drug
+            {
+                Name = "Amoxicillin 250mg",
+                Category = "Capsule",
+                Unit = "Strip",
+                Description = "Antibiotic for bacterial infections",
+                LowStockThreshold = 30
+            },
+            new Drug
+            {
+                Name = "Cetirizine 10mg",
+                Category = "Tablet",
+                Unit = "Strip",
+                Description = "Used for allergies",
+                LowStockThreshold = 40
+            },
+            new Drug
+            {
+                Name = "ORS Powder",
+                Category = "Sachet",
+                Unit = "Packet",
+                Description = "Used for dehydration",
+                LowStockThreshold = 100
+            },
+            new Drug
+            {
+                Name = "Cough Syrup DX",
+                Category = "Syrup",
+                Unit = "Bottle",
+                Description = "Used for cough relief",
+                LowStockThreshold = 20
+            }
+        );
+
+        db.SaveChanges();
+    }
+
+    // Seed Suppliers
+    if (!db.Suppliers.Any())
+    {
+        db.Suppliers.AddRange(
+            new Supplier
+            {
+                Name = "Medico Distributors Pvt Ltd",
+                Phone = "9876543210",
+                ContactEmail = "sales@medico.com",
+                Address = "Ahmedabad, Gujarat"
+            },
+            new Supplier
+            {
+                Name = "Apollo Pharma Wholesale",
+                Phone = "9012345678",
+                ContactEmail = "apollo.wholesale@gmail.com",
+                Address = "Mumbai, Maharashtra"
+            },
+            new Supplier
+            {
+                Name = "Lifecare Medical Supplies",
+                Phone = "9988776655",
+                ContactEmail = "lifecare.supplies@outlook.com",
+                Address = "Bengaluru, Karnataka"
+            }
+        );
+
+        db.SaveChanges();
+    }
+}
 
 app.Run();
